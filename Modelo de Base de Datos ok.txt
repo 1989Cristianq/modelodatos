@@ -1,0 +1,126 @@
+* Numero de Accidente (número entero autoincrementable en 1)
+* Numero de Ipat (número entero de 15 caracteres)
+* Agente Responsable lista desplegable con los siguientes datos (WILSON SAIZ, ANDREA GUAVITA, SANDRA LOPEZ, ANGEL FORERO, MAURICIO MORALES, DIEGO PEREZ, CARLOS VARON, NESTOR VALBUENA, MIGUEL HERNANDEZ, LEONARDO RAMIREZ, EDER PERILLA, EDIXON MANCERA, RICARDO SANCHEZ, MARCELA MARTINEZ, VIANY NOVA, JAVIER TIMOTE, YAMPIER RUIZ, POLCA.
+* Fecha del accidente (fecha del accidente DD/MM/AAAA, 
+* Mes del Accidente (de acuerdo a la fecha del accidente que salga el Mes del accidente, ENERO,FEBRERO,MARZO,ABRIL,MAYO,JUNIO,JULIO,AGOSTO,SEPTIEMBRE,OCTUBRE,NOVIEMBRE,DICIEMBRE)
+* Días establecidos para entrega del IPAT (siempre va a hacer 1)
+* Fecha establecida para entregar el IPAT, (debe ir la fecha del accidente +1 dia )
+* Fecha Real entrega IPAT
+* Días reales de entrega del IPAT (aquí se debe restar la fecha real entrega del IPAT se le resta Fecha establecida para entregar el IPAT)
+* ¿SE entregó dentro de los términos? (este campo deberá colocarse en verde y colocar dentro de los términos si Días reales de entrega de IPAT es menor o igual a Días establecidos para entrega del IPAT 
+* Hora del accidente (formato de 24 horas zona horaria Colombia)
+* Vía lista desplegable (CALLE,CARRERA,DIAGONAL,CASA,LOTE, MANZANA,AVENIDA,VEREDA, KILOMETRO,TRANSVERSAL, VÍA)
+* NUMERO (debe colocar el número de la dirección 3 caracteres)
+* Complemento 1( permite escribir)
+* Complemento 2  (lista desplegable con  -, CARRERA, DIAGONAL, CALLE, TRANSVERSAL, ENTRE.
+* Otra Información Dirección (Permite Escribir al usuario)
+* Dirección concatenada (aquí que se concatene los campos vía, numero, complemento1, complemento2, otra información Dirección).
+* Área (lista URBANA , RURAL)
+* ZAT (lista con ZAT1,ZAT2,ZAT3,ZAT4,ZAT5,ZAT6,ZAT7,ZAT8,ZAT9,ZAT10,ZAT11,ZAT12)
+* Barrios pertenecen al ZAT1 (ASOCIACION DE AMIGOS, VILLA MAQUENCI, LA ESTRELLA, VILLA CASTILLA, VILLA MANUELA, VILLA AURORA 1, VILLA AURORA 2, LOS CEDROS, PRADOS DE CODEM, BELLA SUIZA, ALTOS DE COVICOM, NUEVO HORIZONTE, GAVIOTAS, VILLA DEL LLANO) Pertenecen al ZAT 2 (VIOLETAS, VILLA LUCIA, DON BOSCO, LOS OLIVOS, VILLA MAGALY, GRUPO LOS 18, ATAHUALPA, CIUDADELA LOS ANGELES, GUARATARA, GUARATARA II, LA TIZA, EL TREBOL, EL PALMAR), pertenecen al ZAT 3 (ARAGUANEY, VILLAS DE SAN CARLOS, PORTALES DE SAN CARLOS, LA ALBORADA, EL BAMBU, MORICHAL, MORICHAL II, LA ESPERANZA, LAS VILLAS, SANTA ANA, GUARATARA, CONDADO NUEVO MILENIO, CIUDADELA EL CONSTRUCTOR) pertenecen al ZAT 4 (PABLO VI, LA PALMA, LA CORALINA, MANCERA) Pertenecen al ZAT 5 (VILLA TERESA, LAS VEGAS, PALERMO, POPULAR) pertenecen al ZAT 6 (ALTOS DE LA FLORIDA, LA FLORIDA, LAS COLINAS, CIMARRON, COMCAJA, BALCONES DE SAN DIEGO, ALTOS DE LUCIA), pertenecen al ZAT 7 (
+LA INDEPENDENCIA, NUEVA VICTORIA, BACHUE, ASOVIVIENDA, NUTIBARA
+RINCON DE BACHUE, ASOMENDA, EL PARAISO, LA PRADERA, LAS ACACIAS
+EL BOSQUE) Pertenecen al ZAT 8 (BRISAS DEL PLAYON, LA PRIMAVERA ETAPA I, LA PRIMAVERA ETAPA II, LOS LAURELES, DIVINO NIÑO, TREBOL, OASIS, PINOS, EL JORDAN, CEDRITOS, SAMAN, PANORAMA, ALCARAVAN) Pertenecen al ZAT 9 (SAN JOSE, DORADO ALTO, DORADO BAJO, NARANJOS, COOPERATIVO). Pertenecen al ZAT 10 (ARRAYANES, BALCONES DE SANTA ISABEL, BRISAS, LLANOMAR pertenecen al ZAT 11 (URBANIZACION VILLA DEL PRADO, URBANIZACION EVEREST, PABLO EMILIO RIVEROS, EL RETORNO, SANTA ISABEL, CIUDAD JARDIN, LAS FERIAS) pertenecen al ZAT 12 (BALMORAL, JUAN MELLAO, LA UNION, CENTRO). Aquí  se debe hacer la validación que un ZAT tiene varios barrios, y un barrio pertenece a un ZAT.
+Centro poblado o vereda lista si en Área seleccionan RURAL se habilita, si selecciona URBANA se deshabilita, (PATIO BONITO,MONTEBELLO,LA PRIMAVERA,SAN ISIDRO DE CHICHIMENE,SANTA ROSA,LOMA DE TIGRE,EL TRIUNFO ,LA ESMERALDA,LA UNION,EL CENTRO,SAN NICOLAS ,DINAMARCA,QUEBRADITAS,LA LOMA,SAN JOSE DE LA PALOMAS,SAN CAYETANO,LAS MARGARITAS,CAÑO HONDO,MONTELIBANO,SANTA TERESITA,MONTELIBANO BAJO,EL RESGUARDO,EL ROSARIO,SARDINATA,LA CECILITA,RANCHO GRANDE,CRUCE DE SAN JOSE ,EL PLAYON,SAN JUANITO,FRESCO VALLE,EL RECREO ,ALTO ACACIITAS,ALTO ACACIAS,SAN CRISTOBAL,LAS BLANCAS,EL DIAMANTE,LOMA DEL PAÑUELO,LOMA DE SAN JUAN,LOMA DE SAN PABLO,BRISAS DEL GUAYURIBA,LA PRADERA,VISTA HERMOSA,LABERINTO,LIBANO,LOS PINOS,PORTACHUELO,MANZANARES,VENECIA)
+* Total, de vehículos involucrados (lista 1,2,3,4,5,6,7,8,9,10)
+* Accidente Con (permite seleccionar varias opciones (HERIDOS, MUERTOS, DAÑOS MATERIALES)
+* Clase de accidente (lista ATROPELLO, CAIDA, COLISIÓN, CHOQUE, VOLCAMIENTO, OTRO)
+* Otro se habilita si en clase de accidente selecciona OTRO permite escribir texto
+* Tipo de Vía (lista RURAL, URBANA, NACIONAL, DEPARTAMENTAL, MUNICIPAL)
+* Choque Con (lista VEHICULO, SEMOVIENTE, OBJETO FIJO)
+* Objeto Fijo se habilita si en choque con selecciona OBJETO FIJO (MURO, POSTE, ARBOL, BARANDA, SEMAFORO, INMUEBLE, HIDRANTE, VALLA, SEÑAL, TARIMA, CASETA, VEHICULO ESTACIONADO, OTRO)
+* OTRO Se habilita si en Objeto fijo selecciona OTRO y le permite escribir
+SECCION DATOS VEHICULO 1
+*  Tipo de Servicio Vehículo 1 (lista PARTICULAR, PUBLICO, OFICIAL, DIPLOMATICO)
+*  Clase de vehículo 1 (lista AUTOMOVIL, BUS, BUSETA, BICICLETA, CAMION, CAMIONETA, CAMPERO, TRACTOCAMION- CAMION TRACTOR, CUATRIMOTO, MICROBUS, MOTOCARRO, MOTOCILETA, MOTOTRICICLO, VOLQUETA, VEHICULO DE TRACCION ANIMAL, FUGA DE VEHICULO, VEHICULO FANTASMA).
+* Genero Involucrado Vehículo 1 (MASCULINO, FEMENINO)
+* Rango de edad involucrado Vehículo (PRIMERRA INFANCIA 0-5 AÑOS, INFANCIA DE 6-11 AÑOS, ADOLESCENCIA  12-18 AÑOS, JUVENTUD 14-26 AÑOS, ADULTEZ 27-59 AÑOS, PERSONA MAYOR A 60 AÑOS O MAS).
+* Heridos Vehículo 1 (lista PEATÓN, CONDUCTOR, ACOMPAÑANTE, PASAJERO, NO APLICA).
+* Fallecidos del vehículo 1 (lista PEATON, CONDUCTOR, ACOMPAÑANTE, PASAJEROS, NO APLICA)
+* Embriaguez del conductor 1 (lista SI, NO, NO APLICA).
+* Grado de Embriaguez (se habilita si en Embriaguez del conductor 1 selecciona SI, Lista GRADO 1, GRADO 2, GRADO 3)
+* Número de Heridos Vehículo 1 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* Número de Fallecidos Vehículo 1 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* ¿El Herido 1 fallece después de 30 Días? (lista SI, NO)
+* ¿El Herido 2 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* ¿El Herido 3 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* Nombre y Apellidos Fallecido vehículo 1 
+* Dirección Fallecido Vehículo 1
+* Nombre y Apellidos Fallecido 2 vehículo 1 (Se habilita si en número de fallecidos vehículo 1 selecciona desde 2)
+* Dirección Fallecido 2 Vehículo 1(Se habilita si en número de fallecidos vehículo 1 selecciona desde 2)
+* Nombre y Apellidos Fallecido 3 vehículo 1 (Se habilita si en número de fallecidos vehículo 1 selecciona desde 2)
+* Dirección Fallecido 3 Vehículo 1(Se habilita si en número de fallecidos vehículo 1 selecciona desde 2).
+SECCION DATOS VEHICULO 2
+*  Tipo de Servicio Vehículo 2 (lista PARTICULAR, PUBLICO, OFICIAL, DIPLOMATICO)
+*  Clase de vehículo 2 (lista AUTOMOVIL, BUS, BUSETA, BICICLETA, CAMION, CAMIONETA, CAMPERO, TRACTOCAMION- CAMION TRACTOR, CUATRIMOTO, MICROBUS, MOTOCARRO, MOTOCILETA, MOTOTRICICLO, VOLQUETA, VEHICULO DE TRACCION ANIMAL, FUGA DE VEHICULO, VEHICULO FANTASMA).
+* Genero Involucrado Vehículo 2 (MASCULINO, FEMENINO)
+* Rango de edad involucrado Vehículo (PRIMERRA INFANCIA 0-5 AÑOS, INFANCIA DE 6-11 AÑOS, ADOLESCENCIA  12-18 AÑOS, JUVENTUD 14-26 AÑOS, ADULTEZ 27-59 AÑOS, PERSONA MAYOR A 60 AÑOS O MAS).
+* Heridos Vehículo 2 (lista PEATÓN, CONDUCTOR, ACOMPAÑANTE, PASAJERO, NO APLICA).
+* Fallecidos del vehículo 2 (lista PEATON, CONDUCTOR, ACOMPAÑANTE, PASAJEROS, NO APLICA)
+* Embriaguez del conductor 2 (lista SI, NO, NO APLICA).
+* Grado de Embriaguez (se habilita si en Embriaguez del conductor 1 selecciona SI, Lista GRADO 1, GRADO 2, GRADO 3)
+* Número de Heridos Vehículo 2 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* Número de Fallecidos Vehículo 2 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* ¿El Herido 1 fallece después de 30 Días? (lista SI, NO)
+* ¿El Herido 2 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* ¿El Herido 3 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* Nombre y Apellidos Fallecido vehículo 2 
+* Dirección Fallecido Vehículo 2
+* Nombre y Apellidos Fallecido 2 vehículo 2 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 2 Vehículo 2(Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Nombre y Apellidos Fallecido 3 vehículo 2 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 3 Vehículo 2(Se habilita si en número de fallecidos vehículo 2 selecciona desde 2).
+SECCION DATOS VEHICULO 3
+*  Tipo de Servicio Vehículo 3 (lista PARTICULAR, PUBLICO, OFICIAL, DIPLOMATICO)
+*  Clase de vehículo 3 (lista AUTOMOVIL, BUS, BUSETA, BICICLETA, CAMION, CAMIONETA, CAMPERO, TRACTOCAMION- CAMION TRACTOR, CUATRIMOTO, MICROBUS, MOTOCARRO, MOTOCILETA, MOTOTRICICLO, VOLQUETA, VEHICULO DE TRACCION ANIMAL, FUGA DE VEHICULO, VEHICULO FANTASMA).
+* Genero Involucrado Vehículo 3 (MASCULINO, FEMENINO)
+* Rango de edad involucrado Vehículo (PRIMERRA INFANCIA 0-5 AÑOS, INFANCIA DE 6-11 AÑOS, ADOLESCENCIA  12-18 AÑOS, JUVENTUD 14-26 AÑOS, ADULTEZ 27-59 AÑOS, PERSONA MAYOR A 60 AÑOS O MAS).
+* Heridos Vehículo 3 (lista PEATÓN, CONDUCTOR, ACOMPAÑANTE, PASAJERO, NO APLICA).
+* Fallecidos del vehículo 3 (lista PEATON, CONDUCTOR, ACOMPAÑANTE, PASAJEROS, NO APLICA)
+* Embriaguez del conductor 3 (lista SI, NO, NO APLICA).
+* Grado de Embriaguez (se habilita si en Embriaguez del conductor 1 selecciona SI, Lista GRADO 1, GRADO 2, GRADO 3)
+* Número de Heridos Vehículo 3 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* Número de Fallecidos Vehículo 3 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* ¿El Herido 1 fallece después de 30 Días? (lista SI, NO)
+* ¿El Herido 2 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* ¿El Herido 3 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* Nombre y Apellidos Fallecido vehículo 3 
+* Dirección Fallecido Vehículo 3
+* Nombre y Apellidos Fallecido 2 vehículo 3 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 2 Vehículo 3(Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Nombre y Apellidos Fallecido 3 vehículo 3 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 3 Vehículo 3(Se habilita si en número de fallecidos vehículo 2 selecciona desde 2).
+SECCION DATOS VEHICULO 4
+*  Tipo de Servicio Vehículo 4 (lista PARTICULAR, PUBLICO, OFICIAL, DIPLOMATICO)
+*  Clase de vehículo 4 (lista AUTOMOVIL, BUS, BUSETA, BICICLETA, CAMION, CAMIONETA, CAMPERO, TRACTOCAMION- CAMION TRACTOR, CUATRIMOTO, MICROBUS, MOTOCARRO, MOTOCILETA, MOTOTRICICLO, VOLQUETA, VEHICULO DE TRACCION ANIMAL, FUGA DE VEHICULO, VEHICULO FANTASMA).
+* Genero Involucrado Vehículo 4 (MASCULINO, FEMENINO)
+* Rango de edad involucrado Vehículo (PRIMERRA INFANCIA 0-5 AÑOS, INFANCIA DE 6-11 AÑOS, ADOLESCENCIA  12-18 AÑOS, JUVENTUD 14-26 AÑOS, ADULTEZ 27-59 AÑOS, PERSONA MAYOR A 60 AÑOS O MAS).
+* Heridos Vehículo 4 (lista PEATÓN, CONDUCTOR, ACOMPAÑANTE, PASAJERO, NO APLICA).
+* Fallecidos del vehículo 4 (lista PEATON, CONDUCTOR, ACOMPAÑANTE, PASAJEROS, NO APLICA)
+* Embriaguez del conductor 4 (lista SI, NO, NO APLICA).
+* Grado de Embriaguez (se habilita si en Embriaguez del conductor 1 selecciona SI, Lista GRADO 1, GRADO 2, GRADO 3)
+* Número de Heridos Vehículo 4 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* Número de Fallecidos Vehículo 4 (lista 0,1,2,3,4,5,6,7,8,9,10)
+* ¿El Herido 1 fallece después de 30 Días? (lista SI, NO)
+* ¿El Herido 2 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* ¿El Herido 3 fallece después de 30 Días? (lista SI, NO, NO APLICA)
+* Nombre y Apellidos Fallecido vehículo 4 
+* Dirección Fallecido Vehículo 4
+* Nombre y Apellidos Fallecido 2 vehículo 4 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 2 Vehículo 4(Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Nombre y Apellidos Fallecido 3 vehículo 4 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2)
+* Dirección Fallecido 3 Vehículo 4 (Se habilita si en número de fallecidos vehículo 2 selecciona desde 2).
+* Total Heridos ( se debe sumar los valores de Número de heridos Vehículo 1, Numero de heridos Vehículo 2, Numero de heridos Vehículo 3, Numero de heridos Vehículo 4)
+* Total Fallecidos ( se debe sumar los valores de Número de fallecidos Vehículo 1, Número de fallecidos Vehículo 2, Número de fallecidos Vehículo 3, Número de fallecidos Vehículo 4)
+SECCION DE HIPOTESIS DEL ACCIDENTE
+* Del conductor deben ser 4 Listas desplegables con estas
+
+101Adelantar en curva o pendientes.102Adelantar por la derecha.103Adelantar cerrando104Adelantar invadiendo carril de sentido contrario.105Adelantar en zona prohibida106Adelantar invadiendo carril del mismo sentido en zig-zag107Aprovisionamiento indebido108Carga sobresaliente sin señales109Defectos físicos o psíquicos110Exceso en horas de conducción111Dejar obstáculos en la vía112Desobedecer señales o normas de Tránsito113Desobedecer al agente de Tránsito114Embriaguez aparente115Embriaguez o sustancias alucinógenas116Exceso de velocidad117Explosivos o similares con pasajeros118Falta de mantenimiento mecánico119Frenar bruscamente.120Pasajeros obstruyendo el conductor o sobrecupo.121No mantener distancia de seguridad122Girar bruscamente123No respetar prelación de intersecciones o giros124No cambiar luces125Estacionar sin seguridad126Falta de prevención ante animales en la vía127Transitar en contravía128Recoger o dejar pasajeros sobre la calzada129Transportar pasajeros en la parte exterior130Transitar sin luces131Salirse de la calzada132No respetar prelación133Subirse al andén o vías peatonales134Reverso imprudente135Remolque sin precaución136Incendio por reparación indebida137Falta de señales en vehículo varado138Falta de precaución por niebla, lluvia o humo139Impericia en el manejo140Transitar sin los dispositivos luminosos de detención141Vehículo mal estacionado142Semáforo en rojo143Poner en marcha un vehículo sin precauciones144Carga sobresaliente sin autorización145Arrancar sin precaución146Realizar giro en «U»147Conducir vehículo sin adaptaciones148Exceso de peso149Reparar vehículo en vía pública150Impartir enseñanza automovilística sin autorización151Transporte de carga sin seguridad152Dejar o recoger pasajeros en sitios no demarcados.153No portar espejos154Transitar con las puertas abiertas.155Cargue o descargue en horas o sitios prohibidos.156Transportar pasajeros en vehículos de carga.157Otra
+* Del Vehículo deben ser dos listas desplegables
+201Fallas en las llantas202Fallas en los frenos203Fallas en la dirección204Fallas en luces direccionales205Fallas en luces de frenos206Fallas en luces delanteras207Fallas en luces posteriores208Fallas en pito209Fallas en el tubo de escape. Gases en el interior del vehículo210Fallas en el limpia brisas211Fallas en el sistema eléctrico212Fallas en las puertas213Ausencia o deficiencia de espejos retrovisores214Vidrios en mal estado215Fallas en ajuste capó216Tanque de combustible mal ubicado217Otra 
+* De la vía , deben ser dos listas desplegables
+301Ausencia total o parcial de señales302Ausencia o deficiencia en demarcación303Superficie lisa304Superficie húmeda305Obstáculos en la vía306Huecos307Dejar o movilizar semovientes en la vía308Otras
+* Del peatón, deben ser dos listas desplegables 
+501Viajar colgado o en los estribos502Descender o subir del vehículo en marcha503Pasajero embriagado504Viajar a la izquierda del conductor505Niños en asiento delantero506Otra
+* Remitido a (Lista Desplegable FISCALIA LOCAL, FISCALIA SECCIONAL, INFANCIA Y ADOLESCENCIA 
+* Adjunto documento PDF máximo de carga de 30 Megas
