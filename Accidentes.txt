@@ -1,0 +1,10 @@
+Accidentes
+Id_acidenteINT (11)Int AUTO_INCREMENTNumero_IpatVarchar (100)Agente_reponsableINT (11)Fecha_accidenteDATE DD/MM/AAAAIdMes_accidenteVARCHAR (100)Días_entrega ipat(INT)  SIEMPRE SERA VALOR 1Fecha_establecida_entregadebe ir la fecha del accidente +1 diaFecha_Real_entrega_IPAT
+DATE DD/MM/AAAADías reales_de_entrega_del_IPATaquí se debe restar la fecha real entrega del IPAT se le resta Fecha establecida para entregar el IPAT¿SE entregó dentro de los términos?(este campo deberá colocarse en verde y colocar dentro de los términos si Días reales de entrega de IPAT es menor o igual a Días establecidos para entrega del IPAT
+Hora del accidente
+(formato de 24 horas zona horaria Colombia)Vía lista desplegable
+(CALLE,CARRERA,DIAGONAL,CASA,LOTE, MANZANA,AVENIDA,VEREDA, KILOMETRO,TRANSVERSAL, VÍA)
+
+
+
+
