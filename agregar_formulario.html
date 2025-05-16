@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% block title %}Registro de Accidente{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<div class="container mt-4">
+    <h1 class="mb-4">Registro de Accidente de Tránsito</h1>
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    
+    <form method="post" enctype="multipart/form-data" id="accidenteForm">
+        {% csrf_token %}
+        
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h4>Información Básica del Accidente</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numero_ipat">Número IPAT:</label>
+                            <input type="text" class="form-control" id="numero_ipat" name="numero_ipat" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="agente_responsable">Agente Responsable:</label>
+                            <select class="form-control" id="agente_responsable" name="agente_responsable" required>
+                                <option value="">Seleccione un agente</option>
+                                {% for agente in agentes %}
+                                    <option value="{{ agente.id }}">{{ agente.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fecha_accidente">Fecha del Accidente:</label>
+                            <input type="date" class="form-control" id="fecha_accidente" name="fecha_accidente" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="hora_accidente">Hora del Accidente:</label>
+                            <input type="time" class="form-control" id="hora_accidente" name="hora_accidente" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="dias_establecidos_entrega">Días Establecidos para Entrega:</label>
+                            <input type="number" class="form-control" id="dias_establecidos_entrega" name="dias_establecidos_entrega" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fecha_real_entrega">Fecha Real de Entrega:</label>
+                            <input type="date" class="form-control" id="fecha_real_entrega" name="fecha_real_entrega">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="total_vehiculos_involucrados">Total Vehículos Involucrados:</label>
+                            <input type="number" class="form-control" id="total_vehiculos_involucrados" name="total_vehiculos_involucrados" min="1" max="10" required value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tipo de Accidente:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="con_heridos" name="con_heridos">
+                                <label class="form-check-label" for="con_heridos">Con Heridos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="con_muertos" name="con_muertos">
+                                <label class="form-check-label" for="con_muertos">Con Muertos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="con_danos_materiales" name="con_danos_materiales">
+                                <label class="form-check-label" for="con_danos_materiales">Con Daños Materiales</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h4>Ubicación y Detalles del Accidente</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="via">Tipo de Vía:</label>
+                            <select class="form-control" id="via" name="via" required>
+                                <option value="">Seleccione</option>
+                                {% for via_choice in via_choices %}
+                                    <option value="{{ via_choice.0 }}">{{ via_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="numero_via">Número Vía:</label>
+                            <input type="text" class="form-control" id="numero_via" name="numero_via" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="complemento1">Complemento 1:</label>
+                            <input type="text" class="form-control" id="complemento1" name="complemento1">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="complemento2">Complemento 2:</label>
+                            <select class="form-control" id="complemento2" name="complemento2">
+                                <option value="">Seleccione</option>
+                                {% for complemento_choice in complemento2_choices %}
+                                    <option value="{{ complemento_choice.0 }}">{{ complemento_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="otra_informacion_direccion">Otra información de dirección:</label>
+                            <input type="text" class="form-control" id="otra_informacion_direccion" name="otra_informacion_direccion">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="area">Área:</label>
+                            <select class="form-control" id="area" name="area" required>
+                                <option value="">Seleccione</option>
+                                {% for area_choice in area_choices %}
+                                    <option value="{{ area_choice.0 }}">{{ area_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="zat">ZAT:</label>
+                            <select class="form-control" id="zat" name="zat">
+                                <option value="">Seleccione</option>
+                                {% for zat_item in zats %}
+                                    <option value="{{ zat_item.id }}">{{ zat_item.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="barrio">Barrio:</label>
+                            <select class="form-control" id="barrio" name="barrio">
+                                <option value="">Seleccione</option>
+                                {% for barrio_item in barrios %}
+                                    <option value="{{ barrio_item.id }}" data-zat="{{ barrio_item.zat.id }}">{{ barrio_item.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3" id="centropobladoDiv" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="centro_poblado_vereda">Centro Poblado/Vereda:</label>
+                            <select class="form-control" id="centro_poblado_vereda" name="centro_poblado_vereda">
+                                <option value="">Seleccione</option>
+                                {% for cpv in centro_poblados_veredas %}
+                                    <option value="{{ cpv.id }}">{{ cpv.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="clase_accidente">Clase de Accidente:</label>
+                            <select class="form-control" id="clase_accidente" name="clase_accidente" required>
+                                <option value="">Seleccione</option>
+                                {% for clase_choice in clase_accidente_choices %}
+                                    <option value="{{ clase_choice.0 }}">{{ clase_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="otroClaseAccidenteDiv" style="display: none;">
+                        <div class="form-group">
+                            <label for="otro_clase_accidente">Especifique Clase de Accidente:</label>
+                            <input type="text" class="form-control" id="otro_clase_accidente" name="otro_clase_accidente">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="tipo_via">Tipo de Vía:</label>
+                            <select class="form-control" id="tipo_via" name="tipo_via" required>
+                                <option value="">Seleccione</option>
+                                {% for tipo_via_choice in tipo_via_choices %}
+                                    <option value="{{ tipo_via_choice.0 }}">{{ tipo_via_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3" id="choqueConDiv">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="choque_con">Choque Con:</label>
+                            <select class="form-control" id="choque_con" name="choque_con">
+                                <option value="">Seleccione</option>
+                                {% for choque_choice in choque_con_choices %}
+                                    <option value="{{ choque_choice.0 }}">{{ choque_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="objetoFijoDiv" style="display: none;">
+                        <div class="form-group">
+                            <label for="objeto_fijo">Objeto Fijo:</label>
+                            <select class="form-control" id="objeto_fijo" name="objeto_fijo">
+                                <option value="">Seleccione</option>
+                                {% for objeto_choice in objeto_fijo_choices %}
+                                    <option value="{{ objeto_choice.0 }}">{{ objeto_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="otroObjetoFijoDiv" style="display: none;">
+                        <div class="form-group">
+                            <label for="otro_objeto_fijo">Especifique Objeto Fijo:</label>
+                            <input type="text" class="form-control" id="otro_objeto_fijo" name="otro_objeto_fijo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h4>Hipótesis del Accidente</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Hipótesis del Conductor</h5>
+                        <div class="form-group">
+                            <label for="hipotesis_conductor1">Hipótesis Principal:</label>
+                            <select class="form-control" id="hipotesis_conductor1" name="hipotesis_conductor1">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_conductor %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_conductor2">Hipótesis Secundaria:</label>
+                            <select class="form-control" id="hipotesis_conductor2" name="hipotesis_conductor2">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_conductor %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_conductor3">Hipótesis Terciaria:</label>
+                            <select class="form-control" id="hipotesis_conductor3" name="hipotesis_conductor3">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_conductor %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_conductor4">Hipótesis Cuaternaria:</label>
+                            <select class="form-control" id="hipotesis_conductor4" name="hipotesis_conductor4">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_conductor %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Hipótesis del Vehículo</h5>
+                        <div class="form-group">
+                            <label for="hipotesis_vehiculo1">Hipótesis Principal:</label>
+                            <select class="form-control" id="hipotesis_vehiculo1" name="hipotesis_vehiculo1">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_vehiculo %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_vehiculo2">Hipótesis Secundaria:</label>
+                            <select class="form-control" id="hipotesis_vehiculo2" name="hipotesis_vehiculo2">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_vehiculo %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <h5 class="mt-4">Hipótesis de la Vía</h5>
+                        <div class="form-group">
+                            <label for="hipotesis_via1">Hipótesis Principal:</label>
+                            <select class="form-control" id="hipotesis_via1" name="hipotesis_via1">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_via %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_via2">Hipótesis Secundaria:</label>
+                            <select class="form-control" id="hipotesis_via2" name="hipotesis_via2">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_via %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h5>Hipótesis del Peatón</h5>
+                        <div class="form-group">
+                            <label for="hipotesis_peaton1">Hipótesis Principal:</label>
+                            <select class="form-control" id="hipotesis_peaton1" name="hipotesis_peaton1">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_peaton %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="hipotesis_peaton2">Hipótesis Secundaria:</label>
+                            <select class="form-control" id="hipotesis_peaton2" name="hipotesis_peaton2">
+                                <option value="">Seleccione</option>
+                                {% for hipotesis in hipotesis_peaton %}
+                                    <option value="{{ hipotesis.id }}">{{ hipotesis }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group mt-4">
+                            <label for="remitido_a">Remitido a:</label>
+                            <select class="form-control" id="remitido_a" name="remitido_a">
+                                <option value="">Seleccione</option>
+                                {% for remitido_choice in remitido_a_choices %}
+                                    <option value="{{ remitido_choice.0 }}">{{ remitido_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mt-3">
+                            <label for="croquis_pdf">Croquis (PDF):</label>
+                            <input type="file" class="form-control-file" id="croquis_pdf" name="croquis_pdf" accept=".pdf">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h4>Vehículos Involucrados</h4>
+                <small>Complete la información para cada vehículo involucrado en el accidente</small>
+            </div>
+            <div class="card-body">
+                <div id="vehiculosContainer">
+                    <div class="vehiculo-form" data-index="1">
+                        <h5 class="border-bottom pb-2">Vehículo #1</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tipo_servicio_1">Tipo de Servicio:</label>
+                                    <select class="form-control" id="tipo_servicio_1" name="vehiculos[1][tipo_servicio]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for servicio_choice in tipo_servicio_choices %}
+                                            <option value="{{ servicio_choice.0 }}">{{ servicio_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="clase_vehiculo_1">Clase de Vehículo:</label>
+                                    <select class="form-control" id="clase_vehiculo_1" name="vehiculos[1][clase_vehiculo]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for clase_choice in clase_vehiculo_choices %}
+                                            <option value="{{ clase_choice.0 }}">{{ clase_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="genero_involucrado_1">Género Involucrado:</label>
+                                    <select class="form-control" id="genero_involucrado_1" name="vehiculos[1][genero_involucrado]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for genero_choice in genero_choices %}
+                                            <option value="{{ genero_choice.0 }}">{{ genero_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="rango_edad_involucrado_1">Rango de Edad:</label>
+                                    <select class="form-control" id="rango_edad_involucrado_1" name="vehiculos[1][rango_edad_involucrado]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for edad_choice in rango_edad_choices %}
+                                            <option value="{{ edad_choice.0 }}">{{ edad_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="heridos_1">Heridos:</label>
+                                    <select class="form-control" id="heridos_1" name="vehiculos[1][heridos]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for herido_choice in heridos_choices %}
+                                            <option value="{{ herido_choice.0 }}">{{ herido_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="fallecidos_1">Fallecidos:</label>
+                                    <select class="form-control" id="fallecidos_1" name="vehiculos[1][fallecidos]" required>
+                                        <option value="">Seleccione</option>
+                                        {% for fallecido_choice in fallecidos_choices %}
+                                            <option value="{{ fallecido_choice.0 }}">{{ fallecido_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="embriaguez_conductor_1">Embriaguez del Conductor:</label>
+                                    <select class="form-control embriaguez-conductor" 
+                                            id="embriaguez_conductor_1" name="vehiculos[1][embriaguez_conductor]" required
+                                            data-target="grado_embriaguez_container_1">
+                                        <option value="">Seleccione</option>
+                                        {% for embriaguez_choice in embriaguez_choices %}
+                                            <option value="{{ embriaguez_choice.0 }}">{{ embriaguez_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="grado_embriaguez_container_1" style="display: none;">
+                                <div class="form-group">
+                                    <label for="grado_embriaguez_1">Grado de Embriaguez:</label>
+                                    <select class="form-control" id="grado_embriaguez_1" name="vehiculos[1][grado_embriaguez]">
+                                        <option value="">Seleccione</option>
+                                        {% for grado_choice in grado_embriaguez_choices %}
+                                            <option value="{{ grado_choice.0 }}">{{ grado_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="numero_heridos_1">Número de Heridos:</label>
+                                    <input type="number" class="form-control numero-heridos" id="numero_heridos_1" 
+                                           name="vehiculos[1][numero_heridos]" min="0" value="0"
+                                           data-target="heridos_fallece_container_1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="numero_fallecidos_1">Número de Fallecidos:</label>
+                                    <input type="number" class="form-control numero-fallecidos" id="numero_fallecidos_1" 
+                                           name="vehiculos[1][numero_fallecidos]" min="0" value="0"
+                                           data-target="fallecidos_container_1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="heridos_fallece_container_1" style="display: none;">
+                            <h6 class="mt-3">Información de Heridos que Fallecen Después</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="herido1_fallece_despues_1">Herido 1 Fallece Después:</label>
+                                        <select class="form-control" id="herido1_fallece_despues_1" name="vehiculos[1][herido1_fallece_despues]">
+                                            <option value="">Seleccione</option>
+                                            {% for fallece_choice in fallece_despues_choices %}
+                                                <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="herido2_fallece_despues_1">Herido 2 Fallece Después:</label>
+                                        <select class="form-control" id="herido2_fallece_despues_1" name="vehiculos[1][herido2_fallece_despues]">
+                                            <option value="NO APLICA" selected>NO APLICA</option>
+                                            {% for fallece_choice in fallece_despues_choices %}
+                                                <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="herido3_fallece_despues_1">Herido 3 Fallece Después:</label>
+                                        <select class="form-control" id="herido3_fallece_despues_1" name="vehiculos[1][herido3_fallece_despues]">
+                                            <option value="NO APLICA" selected>NO APLICA</option>
+                                            {% for fallece_choice in fallece_despues_choices %}
+                                                <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="herido4_fallece_despues_1">Herido 3 Fallece Después:</label>
+                                        <select class="form-control" id="herido4_fallece_despues_1" name="vehiculos[1][herido4_fallece_despues]">
+                                            <option value="NO APLICA" selected>NO APLICA</option>
+                                            {% for fallece_choice in fallece_despues_choices %}
+                                                <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="fallecidos_container_1" style="display: none;">
+                            <h6 class="mt-4">Información de Fallecidos</h6>
+                            <div id="fallecidos_forms_1">
+                                <!-- Contenedor dinámico para los formularios de fallecidos -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <button type="button" id="agregarVehiculoBtn" class="btn btn-success">
+                            <i class="fas fa-plus-circle"></i> Agregar Vehículo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4 mb-5">
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save"></i> Guardar Accidente
+                </button>
+                <a href="{% url 'listar_formularios' %}" class="btn btn-secondary btn-lg ml-3">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const totalVehiculosInput = document.getElementById('total_vehiculos_involucrados');
+        const agregarVehiculoBtn = document.getElementById('agregarVehiculoBtn');
+        const vehiculosContainer = document.getElementById('vehiculosContainer');
+        const areaSelect = document.getElementById('area');
+        const centropobladoDiv = document.getElementById('centropobladoDiv');
+        const zatSelect = document.getElementById('zat');
+        const barrioSelect = document.getElementById('barrio');
+        const claseAccidenteSelect = document.getElementById('clase_accidente');
+        const otroClaseAccidenteDiv = document.getElementById('otroClaseAccidenteDiv');
+        const choqueConSelect = document.getElementById('choque_con');
+        const objetoFijoDiv = document.getElementById('objetoFijoDiv');
+        const objetoFijoSelect = document.getElementById('objeto_fijo');
+        const otroObjetoFijoDiv = document.getElementById('otroObjetoFijoDiv');
+        
+        // Plantilla para el formulario de fallecidos
+        function getFallecidoFormTemplate(vehiculoIndex, fallecidoIndex) {
+            return `
+                <div class="fallecido-form border rounded p-3 mt-2" data-vehiculo="${vehiculoIndex}" data-fallecido="${fallecidoIndex}">
+                    <h6>Fallecido #${fallecidoIndex}</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nombre_apellidos_${vehiculoIndex}_${fallecidoIndex}">Nombre y Apellidos:</label>
+                                <input type="text" class="form-control" id="nombre_apellidos_${vehiculoIndex}_${fallecidoIndex}" 
+                                       name="fallecidos[${vehiculoIndex}][${fallecidoIndex}][nombre_apellidos]" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="direccion_${vehiculoIndex}_${fallecidoIndex}">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion_${vehiculoIndex}_${fallecidoIndex}" 
+                                       name="fallecidos[${vehiculoIndex}][${fallecidoIndex}][direccion]" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Plantilla para el formulario de vehículos
+        function getVehiculoFormTemplate(index) {
+            return `
+                <div class="vehiculo-form mt-4 pt-4 border-top" data-index="${index}">
+                    <h5 class="border-bottom pb-2">Vehículo #${index}</h5>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tipo_servicio_${index}">Tipo de Servicio:</label>
+                                <select class="form-control" id="tipo_servicio_${index}" name="vehiculos[${index}][tipo_servicio]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for servicio_choice in tipo_servicio_choices %}
+                                        <option value="{{ servicio_choice.0 }}">{{ servicio_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="clase_vehiculo_${index}">Clase de Vehículo:</label>
+                                <select class="form-control" id="clase_vehiculo_${index}" name="vehiculos[${index}][clase_vehiculo]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for clase_choice in clase_vehiculo_choices %}
+                                        <option value="{{ clase_choice.0 }}">{{ clase_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="genero_involucrado_${index}">Género Involucrado:</label>
+                                <select class="form-control" id="genero_involucrado_${index}" name="vehiculos[${index}][genero_involucrado]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for genero_choice in genero_choices %}
+                                        <option value="{{ genero_choice.0 }}">{{ genero_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rango_edad_involucrado_${index}">Rango de Edad:</label>
+                                <select class="form-control" id="rango_edad_involucrado_${index}" name="vehiculos[${index}][rango_edad_involucrado]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for edad_choice in rango_edad_choices %}
+                                        <option value="{{ edad_choice.0 }}">{{ edad_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="heridos_${index}">Heridos:</label>
+                                <select class="form-control" id="heridos_${index}" name="vehiculos[${index}][heridos]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for herido_choice in heridos_choices %}
+                                        <option value="{{ herido_choice.0 }}">{{ herido_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fallecidos_${index}">Fallecidos:</label>
+                                <select class="form-control" id="fallecidos_${index}" name="vehiculos[${index}][fallecidos]" required>
+                                    <option value="">Seleccione</option>
+                                    {% for fallecido_choice in fallecidos_choices %}
+                                        <option value="{{ fallecido_choice.0 }}">{{ fallecido_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="embriaguez_conductor_${index}">Embriaguez del Conductor:</label>
+                                <select class="form-control embriaguez-conductor" 
+                                        id="embriaguez_conductor_${index}" name="vehiculos[${index}][embriaguez_conductor]" required
+                                        data-target="grado_embriaguez_container_${index}">
+                                    <option value="">Seleccione</option>
+                                    {% for embriaguez_choice in embriaguez_choices %}
+                                        <option value="{{ embriaguez_choice.0 }}">{{ embriaguez_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="grado_embriaguez_container_${index}" style="display: none;">
+                            <div class="form-group">
+                                <label for="grado_embriaguez_${index}">Grado de Embriaguez:</label>
+                                <select class="form-control" id="grado_embriaguez_${index}" name="vehiculos[${index}][grado_embriaguez]">
+                                    <option value="">Seleccione</option>
+                                    {% for grado_choice in grado_embriaguez_choices %}
+                                        <option value="{{ grado_choice.0 }}">{{ grado_choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="numero_heridos_${index}">Número de Heridos:</label>
+                                <input type="number" class="form-control numero-heridos" id="numero_heridos_${index}" 
+                                       name="vehiculos[${index}][numero_heridos]" min="0" value="0"
+                                       data-target="heridos_fallece_container_${index}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="numero_fallecidos_${index}">Número de Fallecidos:</label>
+                                <input type="number" class="form-control numero-fallecidos" id="numero_fallecidos_${index}" 
+                                       name="vehiculos[${index}][numero_fallecidos]" min="0" value="0"
+                                       data-target="fallecidos_container_${index}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger mt-4 eliminar-vehiculo" data-index="${index}">
+                                <i class="fas fa-trash"></i> Eliminar Vehículo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="heridos_fallece_container_${index}" style="display: none;">
+                        <h6 class="mt-3">Información de Heridos que Fallecen Después</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="herido1_fallece_despues_${index}">Herido 1 Fallece Después:</label>
+                                    <select class="form-control" id="herido1_fallece_despues_${index}" name="vehiculos[${index}][herido1_fallece_despues]">
+                                        <option value="NO" selected>NO</option>
+                                        {% for fallece_choice in fallece_despues_choices %}
+                                            <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="herido2_fallece_despues_${index}">Herido 2 Fallece Después:</label>
+                                    <select class="form-control" id="herido2_fallece_despues_${index}" name="vehiculos[${index}][herido2_fallece_despues]">
+                                        <option value="NO APLICA" selected>NO APLICA</option>
+                                        {% for fallece_choice in fallece_despues_choices %}
+                                            <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="herido3_fallece_despues_${index}">Herido 3 Fallece Después:</label>
+                                    <select class="form-control" id="herido3_fallece_despues_${index}" name="vehiculos[${index}][herido3_fallece_despues]">
+                                        <option value="NO APLICA" selected>NO APLICA</option>
+                                        {% for fallece_choice in fallece_despues_choices %}
+                                            <option value="{{ fallece_choice.0 }}">{{ fallece_choice.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="fallecidos_container_${index}" style="display: none;">
+                        <h6 class="mt-4">Información de Fallecidos</h6>
+                        <div id="fallecidos_forms_${index}">
+                            <!-- Contenedor dinámico para los formularios de fallecidos -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Función para actualizar los eventos después de añadir elementos DOM
+        function actualizarEventos() {
+            // Eventos para el control de embriaguez
+            document.querySelectorAll('.embriaguez-conductor').forEach(select => {
+                select.addEventListener('change', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetContainer = document.getElementById(targetId);
+                    if (this.value === 'SI') {
+                        targetContainer.style.display = 'block';
+                    } else {
+                        targetContainer.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Eventos para control de heridos
+            document.querySelectorAll('.numero-heridos').forEach(input => {
+                input.addEventListener('change', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetContainer = document.getElementById(targetId);
+                    if (parseInt(this.value) > 0) {
+                        targetContainer.style.display = 'block';
+                    } else {
+                        targetContainer.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Eventos para control de fallecidos
+            document.querySelectorAll('.numero-fallecidos').forEach(input => {
+                input.addEventListener('change', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetContainer = document.getElementById(targetId);
+                    const vehiculoIndex = this.id.split('_').pop();
+                    const fallecidosFormsContainer = document.getElementById(`fallecidos_forms_${vehiculoIndex}`);
+                    
+                    if (parseInt(this.value) > 0) {
+                        targetContainer.style.display = 'block';
+                        
+                        // Limpiar formularios existentes
+                        fallecidosFormsContainer.innerHTML = '';
+                        
+                        // Crear formularios para cada fallecido
+                        for (let i = 1; i <= parseInt(this.value); i++) {
+                            fallecidosFormsContainer.innerHTML += getFallecidoFormTemplate(vehiculoIndex, i);
+                        }
+                    } else {
+                        targetContainer.style.display = 'none';
+                        fallecidosFormsContainer.innerHTML = '';
+                    }
+                });
+            });
+            
+            // Eventos para eliminar vehículos
+            document.querySelectorAll('.eliminar-vehiculo').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    const vehiculoElement = document.querySelector(`.vehiculo-form[data-index="${index}"]`);
+                    
+                    if (vehiculoElement) {
+                        vehiculoElement.remove();
+                        
+                        // Reordenar índices y actualizar etiquetas
+                        const vehiculos = document.querySelectorAll('.vehiculo-form');
+                        vehiculos.forEach((vehiculo, i) => {
+                            const nuevoIndice = i + 1;
+                            const viejoIndice = parseInt(vehiculo.getAttribute('data-index'));
+                            
+                            if (viejoIndice !== nuevoIndice) {
+                                // Actualizar atributos y textos
+                                vehiculo.setAttribute('data-index', nuevoIndice);
+                                vehiculo.querySelector('h5').textContent = `Vehículo #${nuevoIndice}`;
+                                
+                                // Actualizar todos los IDs y names
+                                // ... (código para actualizar IDs y names)
+                            }
+                        });
+                        
+                        // Actualizar el contador de vehículos
+                        totalVehiculosInput.value = vehiculos.length;
+                    }
+                });
+            });
+        }
+        
+        // Inicializar eventos
+        actualizarEventos();
+        
+        // Evento para agregar vehículo
+        agregarVehiculoBtn.addEventListener('click', function() {
+            const vehiculos = document.querySelectorAll('.vehiculo-form');
+            const nuevoIndice = vehiculos.length + 1;
+            
+            if (nuevoIndice <= 10) {  // Límite de 10 vehículos
+                vehiculosContainer.innerHTML += getVehiculoFormTemplate(nuevoIndice);
+                totalVehiculosInput.value = nuevoIndice;
+                actualizarEventos();
+            } else {
+                alert('No se pueden agregar más de 10 vehículos.');
+            }
+        });
+        
+        // Evento para el área (urbana/rural)
+        areaSelect.addEventListener('change', function() {
+            if (this.value === 'RURAL') {
+                centropobladoDiv.style.display = 'block';
+                document.getElementById('barrio').value = '';
+            } else {
+                centropobladoDiv.style.display = 'none';
+                document.getElementById('centro_poblado_vereda').value = '';
+            }
+        });
+        
+        // Filtrar barrios por ZAT
+        zatSelect.addEventListener('change', function() {
+            const zatId = this.value;
+            
+            // Resetear barrio
+            barrioSelect.value = '';
+            
+            // Mostrar solo barrios del ZAT seleccionado
+            const barrios = barrioSelect.querySelectorAll('option');
+            barrios.forEach(option => {
+                if (option.value === '' || option.getAttribute('data-zat') === zatId) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        });
+        
+        // Controlar clase de accidente "Otro"
+        claseAccidenteSelect.addEventListener('change', function() {
+            if (this.value === 'OTRO') {
+                otroClaseAccidenteDiv.style.display = 'block';
+            } else {
+                otroClaseAccidenteDiv.style.display = 'none';
+                document.getElementById('otro_clase_accidente').value = '';
+            }
+        });
+        
+        // Controlar choque con objeto fijo
+        choqueConSelect.addEventListener('change', function() {
+            if (this.value === 'OBJETO FIJO') {
+                objetoFijoDiv.style.display = 'block';
+            } else {
+                objetoFijoDiv.style.display = 'none';
+                objetoFijoSelect.value = '';
+                otroObjetoFijoDiv.style.display = 'none';
+                document.getElementById('otro_objeto_fijo').value = '';
+            }
+        });
+        
+        // Controlar objeto fijo "Otro"
+        objetoFijoSelect.addEventListener('change', function() {
+            if (this.value === 'OTRO') {
+                otroObjetoFijoDiv.style.display = 'block';
+            } else {
+                otroObjetoFijoDiv.style.display = 'none';
+                document.getElementById('otro_objeto_fijo').value = '';
+            }
+        });
+        
+        // Calcular fecha establecida de entrega
+        document.getElementById('fecha_accidente').addEventListener('change', function() {
+            const fechaAccidente = new Date(this.value);
+            const diasEstablecidos = parseInt(document.getElementById('dias_establecidos_entrega').value) || 1;
+            
+            if (!isNaN(fechaAccidente.getTime())) {
+                const fechaEntrega = new Date(fechaAccidente);
+                fechaEntrega.setDate(fechaEntrega.getDate() + diasEstablecidos);
+                
+                const year = fechaEntrega.getFullYear();
+                const month = String(fechaEntrega.getMonth() + 1).padStart(2, '0');
+                const day = String(fechaEntrega.getDate()).padStart(2, '0');
+                
+                document.getElementById('fecha_establecida_entrega').value = `${year}-${month}-${day}`;
+            }
+        });
+        
+        // Recalcular fecha de entrega al cambiar días establecidos
+        document.getElementById('dias_establecidos_entrega').addEventListener('change', function() {
+            const fechaAccidenteInput = document.getElementById('fecha_accidente');
+            if (fechaAccidenteInput.value) {
+                fechaAccidenteInput.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+{% endblock %}
+{% endblock %}
