@@ -1,6 +1,6 @@
 		"FORMATO DE SEGUIMIENTO DE ACCIDENTALIDAD
-INSTITUTO DE TR¡NSITO Y TRANSPORTE 
-ACACÕAS -META"													
+INSTITUTO DE TR√ÅNSITO Y TRANSPORTE 
+ACAC√çAS -META"													
 															
 															
 															
@@ -11,36 +11,36 @@ ACACÕAS -META"
 															
 															
 															
-INFORMACI”N INTERNA  DEL INSTITUTO DE TR¡NSITO 															
+INFORMACI√ìN INTERNA  DEL INSTITUTO DE TR√ÅNSITO 															
 															
 # de Accidente	1	Numero IPAT	A001704716	Agente responsable	WILSON SAIZ	Fecha del Accidente	19/04/2025	Mes del Accidente	ABRIL						
 															
 															
-DÏas para entregar el Ipat 	1	Fecha establecida para entregar el IPAT	18/03/2025	Fecha Real entrega IPAT	20/03/2025	DÌas reales entrega del IPAT	2	Entregado dentro de los TÈrminos	FUERA DE TERMINOS						
+D√¨as para entregar el Ipat 	1	Fecha establecida para entregar el IPAT	18/03/2025	Fecha Real entrega IPAT	20/03/2025	D√≠as reales entrega del IPAT	2	Entregado dentro de los T√©rminos	FUERA DE TERMINOS						
 															
 DATOS DEL ACCIDENTE 															
 															
 															
-Hora del Accidente 	16:00:00	VÌa	CALLE	N˙mero	14	Complemento 1	a 	Complemento 2	.						
+Hora del Accidente 	16:00:00	V√≠a	CALLE	N√∫mero	14	Complemento 1	a 	Complemento 2	.						
 															
 															
-Otra Informacion DirecciÛn	# 25 -10	DirecciÛn Concatenada	CALLE 14 a  . # 25 -10	¡rea	Urbana	ZAT	ZAT 1	Barrio	ASOCIACION DE AMIGOS						
+Otra Informacion Direcci√≥n	# 25 -10	Direcci√≥n Concatenada	CALLE 14 a  . # 25 -10	√Årea	Urbana	ZAT	ZAT 1	Barrio	ASOCIACION DE AMIGOS						
 															
 															
-Centro Poblado o Vereda	SAN TERESITA 	Total VehÌculos Involucrados	2	Accidente con 	Heridos, Muertos, DaÒos Materiales	Clase de Accidente	ATROPELLO	Otro							
+Centro Poblado o Vereda	SAN TERESITA 	Total Veh√≠culos Involucrados	2	Accidente con 	Heridos, Muertos, Da√±os Materiales	Clase de Accidente	ATROPELLO	Otro							
 															
 															
-	Tipo de VÌa	P⁄BLICA	Choque con 	VEHÕCULO	Objeto Fjo										
+	Tipo de V√≠a	P√öBLICA	Choque con 	VEH√çCULO	Objeto Fjo										
 															
 DATOS VEHICULO 1															
 															
-Tipo de Servicio VehÌculo 1	PARTICULAR	 Clase VehÌculo 1	AUTOM”VIL	Genero Involucrado vehÌculo 1	MASCULINO	Rango de Edad involucrado VehÌculo 1	Juventud 14-26 aÒos 	Heridos vehÌculo 1 	PEAT”N						
+Tipo de Servicio Veh√≠culo 1	PARTICULAR	 Clase Veh√≠culo 1	AUTOM√ìVIL	Genero Involucrado veh√≠culo 1	MASCULINO	Rango de Edad involucrado Veh√≠culo 1	Juventud 14-26 a√±os 	Heridos veh√≠culo 1 	PEAT√ìN						
 															
 															
-Fallecidos del VehÌculo 1	NO APLICA	Embriaguez Conductor 1	SI	Grado Embriaguez Conductor 1	GRADO 2	Numero de heridos VehÌculo 1	2	Numero de fallecidos VehÌculo 1	0						
+Fallecidos del Veh√≠culo 1	NO APLICA	Embriaguez Conductor 1	SI	Grado Embriaguez Conductor 1	GRADO 2	Numero de heridos Veh√≠culo 1	2	Numero de fallecidos Veh√≠culo 1	0						
 															
 															
-øEl Herido 1 fallece despues de 30 DÌas?	SI	øEl Herido 2  fallece despues de 30 DÌas?	NO	øEl Herido 3 fallece despues de 30 DÌas?	NO APLICA	Nombre y Apellidos Fallecido  vehÌculo 1	Jose Del Carmen Ortiz	DirecciÛn Fallecido VehÌculo 1	Diagonal 15 # 23-25 barrio  associacion de amigos						
+¬øEl Herido 1 fallece despues de 30 D√≠as?	SI	¬øEl Herido 2  fallece despues de 30 D√≠as?	NO	¬øEl Herido 3 fallece despues de 30 D√≠as?	NO APLICA	Nombre y Apellidos Fallecido  veh√≠culo 1	Jose Del Carmen Ortiz	Direcci√≥n Fallecido Veh√≠culo 1	Diagonal 15 # 23-25 barrio  associacion de amigos						
 															
 															
 															
@@ -52,7 +52,7 @@ Tipo de Servicio Vehiculo 2		 Clase Vehiculo 2		Genero Involucrado vehiculo 2		R
 Fallecidos del Vehiculo 2		Embriaguez Conductor 2		Grado Embriaguez Conductor 2		Numero de heridos  Vehiculo 2		Numero de fallecidos Vehiculo 2							
 															
 															
-øEl Herido 1 fallece despues de 30 DÌas?		øEl Herido 2  fallece despues de 30 DÌas?		øEl Herido 3 fallece despues de 30 DÌas?		Nombre y Apellidos Fallecido  vehÌculo 2		DirecciÛn Fallecido VehÌculo 2							
+¬øEl Herido 1 fallece despues de 30 D√≠as?		¬øEl Herido 2  fallece despues de 30 D√≠as?		¬øEl Herido 3 fallece despues de 30 D√≠as?		Nombre y Apellidos Fallecido  veh√≠culo 2		Direcci√≥n Fallecido Veh√≠culo 2							
 															
 DATOS VEHICULO 3															
 															
@@ -62,7 +62,7 @@ Tipo de Servicio Vehiculo 3		 Clase Vehiculo 3		Genero Involucrado vehiculo 3		R
 Fallecidos del Vehiculo 3		Embriaguez Conductor 3		Grado Embriaguez Conductor 3		Numero de heridos  Vehiculo 3		Numero de fallecidos Vehiculo 3							
 															
 															
-øEl Herido 1 fallece despues de 30 DÌas?		øEl Herido 2  fallece despues de 30 DÌas?		øEl Herido 3 fallece despues de 30 DÌas?		Nombre y Apellidos Fallecido  vehÌculo 3		DirecciÛn Fallecido VehÌculo 3							
+¬øEl Herido 1 fallece despues de 30 D√≠as?		¬øEl Herido 2  fallece despues de 30 D√≠as?		¬øEl Herido 3 fallece despues de 30 D√≠as?		Nombre y Apellidos Fallecido  veh√≠culo 3		Direcci√≥n Fallecido Veh√≠culo 3							
 															
 															
 DATOS VEHICULO 4															
@@ -73,7 +73,7 @@ Tipo de Servicio Vehiculo 4		 Clase Vehiculo 4		Genero Involucrado vehiculo 4		R
 Fallecidos del Vehiculo 4		Embriaguez Conductor 4		Grado Embriaguez Conductor 4		Numero de heridos  Vehiculo 4		Numero de fallecidos Vehiculo 4							
 															
 															
-øEl Herido 1 fallece despues de 30 DÌas?		øEl Herido 2  fallece despues de 30 DÌas?		øEl Herido 3 fallece despues de 30 DÌas?		Nombre y Apellidos Fallecido  vehÌculo 4		DirecciÛn Fallecido VehÌculo 4							
+¬øEl Herido 1 fallece despues de 30 D√≠as?		¬øEl Herido 2  fallece despues de 30 D√≠as?		¬øEl Herido 3 fallece despues de 30 D√≠as?		Nombre y Apellidos Fallecido  veh√≠culo 4		Direcci√≥n Fallecido Veh√≠culo 4							
 															
 															
 DATOS DE MUERTOS Y HERIDOS															
@@ -85,11 +85,11 @@ DATOS DE MUERTOS Y HERIDOS
 HIPOTESIS DEL ACCIDENTE DE TRANSITO															
 															
 															
-	Del Conductor	91		Del vehiculo	201		Del PeatÛn	401							
+	Del Conductor	91		Del vehiculo	201		Del Peat√≥n	401							
 															
 		92			202			410							
 															
-		NO APLICA		De la VÌa	301		Del pasajero	504							
+		NO APLICA		De la V√≠a	301		Del pasajero	504							
 															
 		NO APLICA			304			506							
 															
@@ -97,7 +97,8 @@ HIPOTESIS DEL ACCIDENTE DE TRANSITO
 REMITIDO A 															
 															
 															
-				Remitido a 	FISCALIA LOCAL										
+				Remitido a 	FISCALIA LOCAL			
+adjuntar PDF
 															
 															
 															
