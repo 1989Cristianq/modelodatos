@@ -58,12 +58,12 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Usuario Registrante:</label>
                         <input type="text" class="form-control" value="{{ request.user.get_full_name }}" disabled>
-                        {{ form.usuario }}
+                        {{ form.usuario.as_hidden }}
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Fecha y Hora de Registro:</label>
                         <input type="text" class="form-control" value="{% now "d/m/Y H:i" %}" disabled>
-                        {{ form.fecha_registro }}
+                        {{ form.fecha_registro.as_hidden }}
                     </div>
                 </div>
             </div>
@@ -251,7 +251,8 @@
                             {{ form.hipotesis_peaton2|as_crispy_field }}
                         </div>
                         
-                        <!-- NUEVA SECCIÓN: Hipótesis del Pasajero -->
+                        <!-- Si quieres añadir hipótesis del pasajero, añádelas aquí -->
+                        {% if form.hipotesis_pasajero1 %}
                         <h5 class="mt-4">Hipótesis del Pasajero</h5>
                         <div class="mb-3">
                             {{ form.hipotesis_pasajero1|as_crispy_field }}
@@ -259,6 +260,7 @@
                         <div class="mb-3">
                             {{ form.hipotesis_pasajero2|as_crispy_field }}
                         </div>
+                        {% endif %}
                     </div>
                     
                     <div class="col-md-6">
@@ -401,342 +403,376 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Elementos del DOM
-        const areaSelect = document.getElementById('id_area');
-        const barrioContainer = document.getElementById('barrio_container');
-        const centroPobladoContainer = document.getElementById('centro_poblado_container');
-        const claseAccidenteSelect = document.getElementById('id_clase_accidente');
-        const otroClaseAccidenteContainer = document.getElementById('otro_clase_accidente_container');
-        const choqueConSelect = document.getElementById('id_choque_con');
-        const objetoFijoContainer = document.getElementById('objeto_fijo_container');
-        const objetoFijoSelect = document.getElementById('id_objeto_fijo');
-        const otroObjetoFijoContainer = document.getElementById('otro_objeto_fijo_container');
-        const totalVehiculosInput = document.getElementById('id_total_vehiculos_involucrados');
-        const agregarVehiculoBtn = document.getElementById('agregar_vehiculo_btn');
-        
-        // Formulario de vehículos
-        const vehiculosFormset = document.getElementById('vehiculos_formset');
-        const vehiculoForms = document.querySelectorAll('.vehiculo-form');
-        
-        // Contadores para el formset
-        let formsetPrefix = 'vehiculo_set';
-        let totalFormsInput = document.querySelector(`#id_${formsetPrefix}-TOTAL_FORMS`);
-        let initialFormsInput = document.querySelector(`#id_${formsetPrefix}-INITIAL_FORMS`);
-        let formCount = parseInt(totalFormsInput.value);
-        
-        // Plantilla para el formulario de fallecidos
-        function getFallecidoFormTemplate(vehiculoIndex, fallecidoIndex) {
-            return `
-                <div class="fallecido-form border rounded p-3 mt-2">
-                    <h6>Fallecido #${fallecidoIndex}</h6>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="fallecido_${vehiculoIndex}_${fallecidoIndex}_nombre" class="form-label">Nombre y Apellidos:</label>
-                            <input type="text" class="form-control" id="fallecido_${vehiculoIndex}_${fallecidoIndex}_nombre" 
-                                   name="fallecidos[${vehiculoIndex}][${fallecidoIndex}][nombre_apellidos]" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="fallecido_${vehiculoIndex}_${fallecidoIndex}_direccion" class="form-label">Dirección:</label>
-                            <input type="text" class="form-control" id="fallecido_${vehiculoIndex}_${fallecidoIndex}_direccion" 
-                                   name="fallecidos[${vehiculoIndex}][${fallecidoIndex}][direccion]" required>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Función para manejar la visibilidad de campos según el área
-        function handleAreaChange() {
-    console.log('Función handleAreaChange ejecutada - Área seleccionada:', areaSelect.value);
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando formulario (versión directa)');
     
-    if (areaSelect.value === 'RURAL') {
-        // Si es área rural, mostrar centro poblado y ocultar barrio
-        if (centroPobladoContainer) {
-            centroPobladoContainer.style.display = 'block';
-            console.log('Mostrando centro poblado');
-        }
-        
-        if (barrioContainer) {
-            barrioContainer.style.display = 'none';
-            console.log('Ocultando barrio');
-        }
-    } else {
-        // Si es área urbana o no seleccionado, mostrar barrio y ocultar centro poblado
-        if (barrioContainer) {
-            barrioContainer.style.display = 'block';
-            console.log('Mostrando barrio');
-        }
-        
-        if (centroPobladoContainer) {
-            centroPobladoContainer.style.display = 'none';
-            console.log('Ocultando centro poblado');
-        }
+    // ===========================================================
+    // 1. FUNCIÓN DE GESTIÓN DIRECTA DE CAMPOS
+    // ===========================================================
+    function mostrarOcultarContenedor(selector, condicion) {
+        const contenedores = document.querySelectorAll(selector);
+        contenedores.forEach(contenedor => {
+            contenedor.style.display = condicion ? 'block' : 'none';
+            console.log(`${selector}: ${condicion ? 'Mostrando' : 'Ocultando'}`);
+        });
     }
-}
-        
-        // Función para manejar la visibilidad de campos según la clase de accidente
-        function handleClaseAccidenteChange() {
-    console.log('Función handleClaseAccidenteChange ejecutada - Clase seleccionada:', claseAccidenteSelect.value);
     
-    if (claseAccidenteSelect.value === 'OTRO') {
-        if (otroClaseAccidenteContainer) {
-            otroClaseAccidenteContainer.style.display = 'block';
-            console.log('Mostrando otro clase de accidente');
-        }
-    } else {
-        if (otroClaseAccidenteContainer) {
-            otroClaseAccidenteContainer.style.display = 'none';
-            console.log('Ocultando otro clase de accidente');
-        }
-    }
-}
-        
-        // Función para manejar la visibilidad de campos según el tipo de choque
-    function handleChoqueConChange() {
-    console.log('Función handleChoqueConChange ejecutada - Choque con:', choqueConSelect.value);
-    
-    if (choqueConSelect.value === 'OBJETO FIJO') {
-        if (objetoFijoContainer) {
-            objetoFijoContainer.style.display = 'block';
-            console.log('Mostrando objeto fijo');
-            handleObjetoFijoChange(); // Evaluar si mostrar "otro objeto fijo"
-        }
-    } else {
-        if (objetoFijoContainer) {
-            objetoFijoContainer.style.display = 'none';
-            console.log('Ocultando objeto fijo');
-        }
-        
-        if (otroObjetoFijoContainer) {
-            otroObjetoFijoContainer.style.display = 'none';
-            console.log('Ocultando otro objeto fijo');
-        }
-    }
-}
-        // Función para manejar la visibilidad de campos según el objeto fijo
-        function handleObjetoFijoChange() {
-            if (objetoFijoSelect.value === 'OTRO') {
-                otroObjetoFijoContainer.style.display = 'block';
-            } else {
-                otroObjetoFijoContainer.style.display = 'none';
+    // ===========================================================
+    // 2. MANEJO DE ÁREA (URBANA/RURAL)
+    // ===========================================================
+    const areaSelect = document.getElementById('id_area');
+    if (areaSelect) {
+        function actualizarArea() {
+            const esRural = areaSelect.value === 'RURAL';
+            mostrarOcultarContenedor('#barrio_container', !esRural);
+            mostrarOcultarContenedor('#centro_poblado_container', esRural);
+            
+            // Buscar contenedor ZAT de manera directa
+            const zatLabel = Array.from(document.querySelectorAll('label')).find(
+                label => label.textContent.trim() === 'ZAT' || label.textContent.trim() === 'ZAT:'
+            );
+            if (zatLabel) {
+                const zatContainer = zatLabel.closest('.col-md-4, .form-group');
+                if (zatContainer) zatContainer.style.display = esRural ? 'none' : 'block';
             }
         }
         
-        // Función para inicializar eventos de embriaguez, heridos y fallecidos
-        function initializeVehiculoEvents() {
-            // Embriaguez
-            document.querySelectorAll('[id^="id_vehiculo_set-"][id$="-embriaguez_conductor"]').forEach(select => {
-                select.addEventListener('change', function() {
-                    const formIndex = this.id.match(/\d+/)[0];
-                    const gradoContainer = this.closest('.vehiculo-form').querySelector('.embriaguez_grado_container');
-                    
-                    if (this.value === 'SI') {
-                        gradoContainer.style.display = 'block';
-                    } else {
-                        gradoContainer.style.display = 'none';
-                    }
-                });
-                
-                // Inicializar estado
-                const formIndex = select.id.match(/\d+/)[0];
-                const gradoContainer = select.closest('.vehiculo-form').querySelector('.embriaguez_grado_container');
-                
-                if (select.value === 'SI') {
-                    gradoContainer.style.display = 'block';
-                }
-            });
-            
-            // Número de heridos
-            document.querySelectorAll('[id^="id_vehiculo_set-"][id$="-numero_heridos"]').forEach(input => {
-                input.addEventListener('change', function() {
-                    const formIndex = this.id.match(/\d+/)[0];
-                    const heridosContainer = this.closest('.vehiculo-form').querySelector('.heridos_fallece_container');
-                    
-                    if (parseInt(this.value) > 0) {
-                        heridosContainer.style.display = 'block';
-                    } else {
-                        heridosContainer.style.display = 'none';
-                    }
-                });
-                
-                // Inicializar estado
-                const formIndex = input.id.match(/\d+/)[0];
-                const heridosContainer = input.closest('.vehiculo-form').querySelector('.heridos_fallece_container');
-                
-                if (parseInt(input.value) > 0) {
-                    heridosContainer.style.display = 'block';
-                }
-            });
-            
-            // Número de fallecidos
-            document.querySelectorAll('[id^="id_vehiculo_set-"][id$="-numero_fallecidos"]').forEach(input => {
-                input.addEventListener('change', function() {
-                    const formIndex = this.id.match(/\d+/)[0];
-                    const fallecidosContainer = this.closest('.vehiculo-form').querySelector('.fallecidos_container');
-                    const fallecidosForms = this.closest('.vehiculo-form').querySelector('.fallecidos_forms');
-                    
-                    if (parseInt(this.value) > 0) {
-                        fallecidosContainer.style.display = 'block';
-                        
-                        // Limpiar formularios existentes
-                        fallecidosForms.innerHTML = '';
-                        
-                        // Crear formularios para cada fallecido
-                        for (let i = 1; i <= parseInt(this.value); i++) {
-                            fallecidosForms.innerHTML += getFallecidoFormTemplate(formIndex, i);
-                        }
-                    } else {
-                        fallecidosContainer.style.display = 'none';
-                        fallecidosForms.innerHTML = '';
-                    }
-                });
-                
-                // Inicializar estado
-                const formIndex = input.id.match(/\d+/)[0];
-                const fallecidosContainer = input.closest('.vehiculo-form').querySelector('.fallecidos_container');
-                const fallecidosForms = input.closest('.vehiculo-form').querySelector('.fallecidos_forms');
-                
-                if (parseInt(input.value) > 0) {
-                    fallecidosContainer.style.display = 'block';
-                    
-                    // Crear formularios para cada fallecido
-                    for (let i = 1; i <= parseInt(input.value); i++) {
-                        fallecidosForms.innerHTML += getFallecidoFormTemplate(formIndex, i);
-                    }
-                }
-            });
-            
-            // Botones para eliminar vehículos
-            document.querySelectorAll('.eliminar-vehiculo').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const vehiculoForm = this.closest('.vehiculo-form');
-                    const formIndex = vehiculoForm.id.replace('vehiculo_', '');
-                    
-                    // Marcar como eliminado
-                    const deleteCheckbox = document.getElementById(`id_vehiculo_set-${formIndex}-DELETE`);
-                    if (deleteCheckbox) {
-                        deleteCheckbox.checked = true;
-                    }
-                    
-                    // Ocultar el formulario
-                    vehiculoForm.style.display = 'none';
-                    
-                    // Actualizar el contador de vehículos
-                    updateTotalVehiculos();
-                });
-            });
+        areaSelect.addEventListener('change', actualizarArea);
+        actualizarArea();
+    }
+    
+    // ===========================================================
+    // 3. MANEJO DE CLASE DE ACCIDENTE
+    // ===========================================================
+    const claseAccidenteSelect = document.getElementById('id_clase_accidente');
+    if (claseAccidenteSelect) {
+        function actualizarClaseAccidente() {
+            mostrarOcultarContenedor('#otro_clase_accidente_container', 
+                claseAccidenteSelect.value === 'OTRO');
         }
         
-        // Función para actualizar el total de vehículos
-        function updateTotalVehiculos() {
-            const visibleVehiculos = document.querySelectorAll('.vehiculo-form[style*="display: none"]').length;
-            totalVehiculosInput.value = formCount - visibleVehiculos;
+        claseAccidenteSelect.addEventListener('change', actualizarClaseAccidente);
+        actualizarClaseAccidente();
+    }
+    
+    // ===========================================================
+    // 4. MANEJO DE CHOQUE CON OBJETO FIJO
+    // ===========================================================
+    const choqueConSelect = document.getElementById('id_choque_con');
+    const objetoFijoSelect = document.getElementById('id_objeto_fijo');
+    
+    if (choqueConSelect) {
+        function actualizarChoqueCon() {
+            const esObjetoFijo = choqueConSelect.value === 'OBJETO FIJO';
+            mostrarOcultarContenedor('#objeto_fijo_container', esObjetoFijo);
+            
+            if (!esObjetoFijo) {
+                mostrarOcultarContenedor('#otro_objeto_fijo_container', false);
+            } else if (objetoFijoSelect) {
+                actualizarObjetoFijo();
+            }
         }
         
-        // Función para agregar un nuevo formulario de vehículo
-        function addVehiculoForm() {
-            // Verificar límite de 10 vehículos
-            if (formCount >= 10) {
+        choqueConSelect.addEventListener('change', actualizarChoqueCon);
+        actualizarChoqueCon();
+    }
+    
+    if (objetoFijoSelect) {
+        function actualizarObjetoFijo() {
+            mostrarOcultarContenedor('#otro_objeto_fijo_container', 
+                objetoFijoSelect.value === 'OTRO');
+        }
+        
+        objetoFijoSelect.addEventListener('change', actualizarObjetoFijo);
+        actualizarObjetoFijo();
+    }
+    
+    // ===========================================================
+    // 5. FUNCIONES DE INICIALIZACIÓN Y GESTIÓN DE VEHÍCULOS
+    // ===========================================================
+    
+    // Para actualizar la numeración de vehículos visibles
+    function renumerarVehiculos() {
+        const vehiculos = document.querySelectorAll('.vehiculo-form:not([style*="display: none"])');
+        vehiculos.forEach((vehiculo, index) => {
+            const titulo = vehiculo.querySelector('h5');
+            if (titulo) titulo.textContent = `Vehículo #${index + 1}`;
+        });
+    }
+    
+    // Para actualizar el contador total de vehículos
+    function actualizarTotalVehiculos() {
+        const totalInput = document.getElementById('id_total_vehiculos_involucrados');
+        if (totalInput) {
+            const cantidad = document.querySelectorAll('.vehiculo-form:not([style*="display: none"])').length;
+            totalInput.value = cantidad;
+        }
+    }
+    
+    // Para inicializar todos los eventos de un formulario de vehículo
+    function inicializarFormularioVehiculo(formulario) {
+        console.log(`Inicializando formulario: ${formulario.id}`);
+        
+        // 1. EMBRIAGUEZ DEL CONDUCTOR
+        const selectEmbriaguez = formulario.querySelector('[id$="-embriaguez_conductor"]');
+        const contenedorGrado = formulario.querySelector('.embriaguez_grado_container');
+        
+        if (selectEmbriaguez && contenedorGrado) {
+            function actualizarEmbriaguez() {
+                const valor = selectEmbriaguez.value || '';
+                const esSi = valor.toUpperCase() === 'SI' || valor.toUpperCase() === 'SÍ';
+                
+                contenedorGrado.style.display = esSi ? 'block' : 'none';
+                console.log(`Embriaguez ${selectEmbriaguez.id}: "${valor}" - Mostrar grado: ${esSi}`);
+                
+                // Forzar visibilidad del contenedor (debugging)
+                if (esSi && window.getComputedStyle(contenedorGrado).display === 'none') {
+                    console.warn('Forzando visibilidad del contenedor de grado de embriaguez');
+                    contenedorGrado.style.display = 'block !important';
+                    contenedorGrado.setAttribute('style', 'display: block !important');
+                }
+            }
+            
+            selectEmbriaguez.addEventListener('change', actualizarEmbriaguez);
+            
+            // Forzar inicialización inmediata
+            setTimeout(actualizarEmbriaguez, 100);
+        } else {
+            console.warn(`Falta selector de embriaguez o contenedor de grado en ${formulario.id}`);
+            if (selectEmbriaguez) console.log('Valor de embriaguez:', selectEmbriaguez.value);
+        }
+        
+        // 2. NÚMERO DE HERIDOS
+        const inputHeridos = formulario.querySelector('[id$="-numero_heridos"]');
+        const contenedorHeridos = formulario.querySelector('.heridos_fallece_container');
+        
+        if (inputHeridos && contenedorHeridos) {
+            function actualizarHeridos() {
+                const cantidad = parseInt(inputHeridos.value) || 0;
+                contenedorHeridos.style.display = cantidad > 0 ? 'block' : 'none';
+                console.log(`Heridos ${inputHeridos.id}: ${cantidad} - Mostrar: ${cantidad > 0}`);
+                
+                // Forzar visibilidad (debugging)
+                if (cantidad > 0 && window.getComputedStyle(contenedorHeridos).display === 'none') {
+                    console.warn('Forzando visibilidad del contenedor de heridos');
+                    contenedorHeridos.setAttribute('style', 'display: block !important');
+                }
+            }
+            
+            inputHeridos.addEventListener('change', actualizarHeridos);
+            inputHeridos.addEventListener('input', actualizarHeridos);
+            inputHeridos.addEventListener('keyup', actualizarHeridos);
+            
+            // Forzar inicialización inmediata
+            setTimeout(actualizarHeridos, 100);
+        } else {
+            console.warn(`Falta input de heridos o contenedor en ${formulario.id}`);
+        }
+        
+        // 3. NÚMERO DE FALLECIDOS
+        const inputFallecidos = formulario.querySelector('[id$="-numero_fallecidos"]');
+        const contenedorFallecidos = formulario.querySelector('.fallecidos_container');
+        const formulariosFallecidos = formulario.querySelector('.fallecidos_forms');
+        
+        if (inputFallecidos && contenedorFallecidos) {
+            function actualizarFallecidos() {
+                const cantidad = parseInt(inputFallecidos.value) || 0;
+                contenedorFallecidos.style.display = cantidad > 0 ? 'block' : 'none';
+                console.log(`Fallecidos ${inputFallecidos.id}: ${cantidad} - Mostrar: ${cantidad > 0}`);
+                
+                // Crear formularios de fallecidos si es necesario
+                if (cantidad > 0 && formulariosFallecidos) {
+                    formulariosFallecidos.innerHTML = '';
+                    const formIndex = inputFallecidos.id.match(/\d+/) ? inputFallecidos.id.match(/\d+/)[0] : '0';
+                    
+                    for (let i = 1; i <= cantidad; i++) {
+                        formulariosFallecidos.innerHTML += `
+                            <div class="fallecido-form border rounded p-3 mt-2">
+                                <h6>Fallecido #${i}</h6>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fallecido_${formIndex}_${i}_nombre" class="form-label">Nombre y Apellidos:</label>
+                                        <input type="text" class="form-control" id="fallecido_${formIndex}_${i}_nombre" 
+                                               name="fallecidos[${formIndex}][${i}][nombre_apellidos]" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fallecido_${formIndex}_${i}_direccion" class="form-label">Dirección:</label>
+                                        <input type="text" class="form-control" id="fallecido_${formIndex}_${i}_direccion" 
+                                               name="fallecidos[${formIndex}][${i}][direccion]" required>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                // Forzar visibilidad (debugging)
+                if (cantidad > 0 && window.getComputedStyle(contenedorFallecidos).display === 'none') {
+                    console.warn('Forzando visibilidad del contenedor de fallecidos');
+                    contenedorFallecidos.setAttribute('style', 'display: block !important');
+                }
+            }
+            
+            inputFallecidos.addEventListener('change', actualizarFallecidos);
+            inputFallecidos.addEventListener('input', actualizarFallecidos);
+            inputFallecidos.addEventListener('keyup', actualizarFallecidos);
+            
+            // Forzar inicialización inmediata
+            setTimeout(actualizarFallecidos, 100);
+        } else {
+            console.warn(`Falta input de fallecidos o contenedor en ${formulario.id}`);
+        }
+        
+        // 4. BOTÓN ELIMINAR VEHÍCULO
+        const botonEliminar = formulario.querySelector('.eliminar-vehiculo');
+        if (botonEliminar) {
+            botonEliminar.addEventListener('click', function() {
+                const formIndex = formulario.id.replace('vehiculo_', '');
+                
+                // Marcar para eliminar
+                const deleteCheckbox = document.getElementById(`id_vehiculo_set-${formIndex}-DELETE`);
+                if (deleteCheckbox) deleteCheckbox.checked = true;
+                
+                // Ocultar formulario
+                formulario.style.display = 'none';
+                
+                // Actualizar contadores y renumerar
+                actualizarTotalVehiculos();
+                renumerarVehiculos();
+            });
+        }
+    }
+    
+    // Inicializar todos los formularios existentes
+    document.querySelectorAll('.vehiculo-form').forEach(formulario => {
+        inicializarFormularioVehiculo(formulario);
+    });
+    
+    // Configurar botón agregar vehículo
+    const botonAgregar = document.getElementById('agregar_vehiculo_btn');
+    if (botonAgregar) {
+        botonAgregar.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Elementos necesarios
+            const formsetContainer = document.getElementById('vehiculos_formset');
+            const totalFormsInput = document.querySelector('input[name$="TOTAL_FORMS"]');
+            
+            if (!formsetContainer || !totalFormsInput) {
+                console.error('No se encontraron elementos esenciales');
+                return;
+            }
+            
+            // Verificar límite
+            const visibleCount = document.querySelectorAll('.vehiculo-form:not([style*="display: none"])').length;
+            if (visibleCount >= 10) {
                 alert('No se pueden agregar más de 10 vehículos.');
                 return;
             }
             
-            // Obtener el HTML del primer formulario como plantilla
+            // Obtener plantilla base
             const firstForm = document.querySelector('.vehiculo-form');
-            const newForm = firstForm.cloneNode(true);
+            if (!firstForm) {
+                console.error('No se encontró formulario base');
+                return;
+            }
             
-            // Actualizar IDs y nombres
+            // Calcular nuevo índice
+            const formCount = parseInt(totalFormsInput.value);
+            
+            // Clonar y configurar
+            const newForm = firstForm.cloneNode(true);
             newForm.id = `vehiculo_${formCount}`;
-            newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${formCount}-`);
-            newForm.innerHTML = newForm.innerHTML.replace(/_0_/g, `_${formCount}_`);
+            
+            // Actualizar índices
+            newForm.innerHTML = newForm.innerHTML
+                .replace(/vehiculo_set-0-/g, `vehiculo_set-${formCount}-`)
+                .replace(/id_vehiculo_set-0-/g, `id_vehiculo_set-${formCount}-`);
             
             // Limpiar valores
-            newForm.querySelectorAll('input[type="text"], input[type="number"], select').forEach(input => {
-                if (input.name.includes('DELETE')) {
-                    input.checked = false;
-                } else if (input.type === 'number') {
-                    input.value = 0;
+            newForm.querySelectorAll('input, select, textarea').forEach(field => {
+                if (field.type === 'checkbox') {
+                    field.checked = false;
+                } else if (field.type === 'number') {
+                    field.value = '0';
+                } else if (field.tagName === 'SELECT') {
+                    field.selectedIndex = 0;
                 } else {
-                    input.value = '';
+                    field.value = '';
                 }
             });
             
-            // Actualizar título
-            newForm.querySelector('h5').textContent = `Vehículo #${formCount + 1}`;
+            // Ocultar contenedores específicos
+            newForm.querySelectorAll('.fallecidos_container, .heridos_fallece_container, .embriaguez_grado_container').forEach(container => {
+                container.style.display = 'none';
+            });
             
-            // Agregar botón de eliminar
-            if (!newForm.querySelector('.eliminar-vehiculo')) {
-                const lastRow = newForm.querySelector('.row:nth-of-type(3)');
-                const btnCol = document.createElement('div');
-                btnCol.className = 'col-md-4 mb-3';
-                btnCol.innerHTML = `
-                    <button type="button" class="btn btn-danger mt-4 eliminar-vehiculo">
-                        <i class="fas fa-trash me-2"></i>Eliminar Vehículo
-                    </button>
-                `;
-                lastRow.appendChild(btnCol);
-            }
+            // Limpiar fallecidos
+            const fallecidosForms = newForm.querySelector('.fallecidos_forms');
+            if (fallecidosForms) fallecidosForms.innerHTML = '';
             
-            // Resetear contenedores específicos
-            newForm.querySelector('.fallecidos_forms').innerHTML = '';
-            newForm.querySelector('.fallecidos_container').style.display = 'none';
-            newForm.querySelector('.heridos_fallece_container').style.display = 'none';
-            newForm.querySelector('.embriaguez_grado_container').style.display = 'none';
+            // Añadir al formulario
+            formsetContainer.appendChild(newForm);
             
-            // Añadir el nuevo formulario
-            vehiculosFormset.insertBefore(newForm, agregarVehiculoBtn.parentNode.parentNode.parentNode);
+            // Actualizar contadores
+            totalFormsInput.value = formCount + 1;
             
-            // Incrementar contador y actualizar TOTAL_FORMS
-            formCount++;
-            totalFormsInput.value = formCount;
+            // Inicializar eventos
+            inicializarFormularioVehiculo(newForm);
             
-            // Actualizar total de vehículos
-            totalVehiculosInput.value = formCount;
-            
-            // Inicializar eventos para el nuevo formulario
-            initializeVehiculoEvents();
+            // Actualizar contadores y renumerar
+            actualizarTotalVehiculos();
+            renumerarVehiculos();
+        });
+    }
+    
+    // ===========================================================
+    // 6. CONVERSIÓN DE INPUTS A SELECTORES (OPCIONAL)
+    // ===========================================================
+    
+    // Si quieres convertir los inputs numéricos en selectores
+    function convertirInputASelect(inputId, maxValue) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        
+        // Crear opciones (0 a maxValue)
+        const opciones = [];
+        for (let i = 0; i <= maxValue; i++) {
+            opciones.push(`<option value="${i}">${i}</option>`);
         }
         
-        // Inicializar eventos
-        areaSelect.addEventListener('change', handleAreaChange);
-        claseAccidenteSelect.addEventListener('change', handleClaseAccidenteChange);
-        choqueConSelect.addEventListener('change', handleChoqueConChange);
-        objetoFijoSelect.addEventListener('change', handleObjetoFijoChange);
-        agregarVehiculoBtn.addEventListener('click', addVehiculoForm);
+        // Crear select
+        const select = document.createElement('select');
+        select.className = input.className;
+        select.id = input.id;
+        select.name = input.name;
+        select.innerHTML = opciones.join('');
         
-        // Inicializar estados
-        handleAreaChange();
-        handleClaseAccidenteChange();
-        handleChoqueConChange();
-        handleObjetoFijoChange();
-        initializeVehiculoEvents();
-        // Diagnosticar elementos críticos
-        console.log('Diagnóstico de elementos:');
+        // Reemplazar
+        input.parentNode.replaceChild(select, input);
+        
+        // Añadir evento
+        select.addEventListener('change', function() {
+            // Disparar evento change
+            const event = new Event('change');
+            select.dispatchEvent(event);
+        });
+        
+        return select;
+    }
     
-    const elementosCriticos = [
-        'id_area',
-        'barrio_container',
-        'centro_poblado_container',
-        'id_clase_accidente',
-        'otro_clase_accidente_container',
-        'id_choque_con',
-        'objeto_fijo_container',
-        'id_objeto_fijo',
-        'otro_objeto_fijo_container'
-    ];
+    // Comentar estas líneas para no convertir a select
+    /*
+    document.querySelectorAll('.vehiculo-form').forEach(form => {
+        const heridosId = form.querySelector('[id$="-numero_heridos"]')?.id;
+        const fallecidosId = form.querySelector('[id$="-numero_fallecidos"]')?.id;
+        
+        if (heridosId) convertirInputASelect(heridosId, 10);
+        if (fallecidosId) convertirInputASelect(fallecidosId, 10);
+    });
+    */
     
-    elementosCriticos.forEach(function(id) {
-        const elemento = document.getElementById(id);
-        console.log(`${id}: ${elemento ? 'ENCONTRADO' : 'NO ENCONTRADO'}`);
-    });
-    // Forzar una actualización de todos los campos 500ms después de cargar la página
-    setTimeout(function() {
-        console.log('Ejecutando actualización forzada de campos condicionales');
-        handleAreaChange();
-        handleClaseAccidenteChange();
-        handleChoqueConChange();
-    }, 500);
-    });
+    console.log('Inicialización completada');
+});
 </script>
 {% endblock %}
